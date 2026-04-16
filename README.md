@@ -22,3 +22,33 @@ Libertad Creativa: Tienes total libertad para modificar estilos, inyectar Tailwi
 Rompe el HTML/CSS, no la lógica: Puedes alterar por completo toda la estructura visual en index.astro, Layout.astro y la estructura de ProductCard, pero debes preservar la funcionalidad subyacente (variables inyectadas en astro repitiendo sobre el array de productos, botones con sus atributos data-id, data-price para que el carrito siga interactuando).
 Prohibido tocar backend: No intentes construir paneles de administración, no intentes crear APIs conectadas a bases de datos SQL o Mongo. Todo el flujo de datos ya está resuelto en la línea del sanityClient.fetch().
 Mi próxima instrucción será entregarte la información sobre el nuevo cliente. Prepárate para aplicar diseño de altísima calidad basado en el boilerplate entregado.
+
+## 🔵 Flujo de trabajo:
+
+### Que hacer **CADA VEZ** que creas una página nueva 
+
+Llega un cliente y te dice "Quiero una tienda". 
+
+#### Paso 1: En tu Panel de Sanity
+
+Entras a `https://case-store.sanity.studio/`, creas una nueva tienda dándole un identificador o "slug" (por ejemplo: `mosaicosole`). 
+
+
+
+#### Paso 2: En tu Computadora (El Código Frontend)
+
+1. Agarras tu carpeta de plantilla (`case-store`) y la duplicas (¡copiar y pegar literal!).
+
+2. Le cambias el nombre a la carpeta duplicada (Ej. `mosaicosole`). Abres esa carpeta en tu VS Code.
+
+3. El único cambio lógico necesario: Vas al archivo donde Astro le pide los datos a Sanity y le cambias una sola palabra en la consulta: "Tráeme solo los productos que pertenezcan al slug `mosaicosole`".
+
+4. Diseñar a tu gusto (Frontend).
+
+
+
+#### Paso 3: Subirlo a Internet (Despliegue)
+
+- Subes esta carpeta `mosaicosole` a un repositorio (GitHub).
+
+- Lo conectas a un servicio como Netlify o Vercel (gratuitos y geniales para Astro).
