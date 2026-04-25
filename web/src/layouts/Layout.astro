@@ -18,20 +18,17 @@ const { title, description = 'WhatsApp Store', themeColor = '#10B981' } = Astro.
     <meta name="theme-color" content={themeColor} />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style is:global define:vars={{ themePrimary: themeColor }}>
       :root {
         --color-primary: var(--themePrimary);
-        --color-accent: #D4AF37; /* Soft gold accent if needed */
-        --color-bg: #FAFAFA;
-        --color-surface: #FFFFFF;
-        --color-text: #171717;
-        --color-text-muted: #737373;
+        --color-bg: #FFFFFF;
+        --color-surface: #F9F9F9;
+        --color-text: #1A1A1A;
+        --color-text-muted: #4A4A4A;
         --color-border: #EEEEEE;
-        --radius: 4px; /* Slightly sharper corners for artistic feel */
-        --shadow-sm: 0 2px 8px rgb(0 0 0 / 0.04);
-        --shadow: 0 8px 24px rgb(0 0 0 / 0.06);
-        --shadow-lg: 0 20px 40px rgb(0 0 0 / 0.1);
+        --font-heading: 'Cinzel', serif;
+        --font-body: 'Montserrat', sans-serif;
       }
       
       * {
@@ -41,16 +38,20 @@ const { title, description = 'WhatsApp Store', themeColor = '#10B981' } = Astro.
       }
       
       body {
-        font-family: 'Inter', sans-serif;
+        font-family: var(--font-body);
         background-color: var(--color-bg);
         color: var(--color-text);
-        line-height: 1.6;
+        line-height: 1.8;
         -webkit-font-smoothing: antialiased;
       }
 
-      h1, h2, h3, h4, h5, h6, .font-serif {
-        font-family: 'Playfair Display', serif;
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
         font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--color-text);
+        margin-bottom: 0.5em;
       }
 
       button {
@@ -78,7 +79,7 @@ const { title, description = 'WhatsApp Store', themeColor = '#10B981' } = Astro.
         inset: 0;
         pointer-events: none;
         z-index: 9999;
-        opacity: 0.04;
+        opacity: 0.02; /* Reduced opacity for more elegant feel */
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       }
     </style>

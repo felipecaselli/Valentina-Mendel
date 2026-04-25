@@ -29,91 +29,179 @@ const storeData = await sanityClient.fetch(query, { slug: STORE_SLUG });
 ---
 
 {storeData ? (
-  <Layout title={`${storeData.name} - Oficial`} description={`Tienda oficial de ${storeData.name}`} themeColor={storeData.themeColor?.hex || '#10B981'}>
-    <header class="store-header">
-      <div class="header-container">
+  <Layout title={`${storeData.name} - Portafolio de Arte`} description={`Portafolio oficial de ${storeData.name}`} themeColor={storeData.themeColor?.hex || '#1A1A1A'}>
+    
+    <header class="gallery-header">
+      <div class="logo-container">
         {storeData.logo ? (
-          <img src={urlForImage(storeData.logo).height(80).url()} alt={`Logo de ${storeData.name}`} class="store-logo" />
+          <img src={urlForImage(storeData.logo).height(120).url()} alt={`Logo de ${storeData.name}`} class="gallery-logo" />
         ) : (
-          <h1 class="store-title">{storeData.name}</h1>
+          <div class="typographic-logo">
+            <h1 class="logo-initials">VM</h1>
+            <h2 class="logo-fullname">{storeData.name || "Valentina Mendel"}</h2>
+            <div class="logo-subtitle">
+              <span class="line"></span>
+              <span class="text">ARTISTA</span>
+              <span class="line"></span>
+            </div>
+          </div>
         )}
       </div>
+
+      <nav class="gallery-nav">
+        <ul>
+          <li><a href="/">HOME</a></li>
+          <li><a href="#obras">OBRAS ORIGINALES</a></li>
+          <li><a href="#portfolio">PORTFOLIO</a></li>
+          <li><a href="#historia">MI HISTORIA</a></li>
+          <li><a href="#contacto">CONTACTO</a></li>
+        </ul>
+      </nav>
     </header>
 
-    <main class="store-main fade-in-delayed">
-      <div class="products-grid">
-        {storeData.products && storeData.products.length > 0 ? (
-          storeData.products.map((product) => (
-            <div class="masonry-item">
-              <ProductCard product={product} />
-            </div>
-          ))
-        ) : (
-          <p class="no-products">No hay productos disponibles por el momento.</p>
-        )}
-      </div>
+    <main class="gallery-main fade-in-delayed">
+      
+      <section class="section-title">
+        <h2 id="portfolio">P O R T F O L I O</h2>
+      </section>
+
+      <section class="portfolio-section">
+        <div class="masonry-grid">
+          {storeData.products && storeData.products.length > 0 ? (
+            storeData.products.map((product) => (
+              <div class="masonry-item">
+                <ProductCard product={product} />
+              </div>
+            ))
+          ) : (
+            <p class="no-products">No hay obras disponibles por el momento.</p>
+          )}
+        </div>
+      </section>
+
     </main>
 
     <CartDrawer whatsappNumber={storeData.whatsappNumber} />
 
     <style>
-      .store-header {
-        background: var(--color-surface);
-        border-bottom: 1px solid var(--color-border);
-        padding: 24px 0;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        box-shadow: var(--shadow-sm);
+      .gallery-header {
+        padding: 60px 24px 40px;
+        text-align: center;
+        background: transparent;
       }
 
-      .header-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
+      .logo-container {
+        margin-bottom: 40px;
         display: flex;
-        align-items: center;
         justify-content: center;
       }
 
-      .store-logo {
-        max-height: 56px;
+      .gallery-logo {
+        max-height: 120px;
         width: auto;
       }
 
-      .store-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--color-primary);
-        font-family: 'Playfair Display', serif;
+      /* Typographic Logo Styles */
+      .typographic-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
-      .store-main {
+      .logo-initials {
+        font-size: 5rem;
+        line-height: 1;
+        margin-bottom: 10px;
+        letter-spacing: 0;
+      }
+
+      .logo-fullname {
+        font-size: 1.2rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 15px;
+      }
+
+      .logo-subtitle {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        letter-spacing: 0.4em;
+        color: var(--color-text-muted);
+      }
+
+      .logo-subtitle .line {
+        height: 1px;
+        width: 40px;
+        background-color: var(--color-text-muted);
+      }
+
+      /* Navigation Styles */
+      .gallery-nav {
+        margin-top: 20px;
+      }
+
+      .gallery-nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+      }
+
+      .gallery-nav a {
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        color: var(--color-text-muted);
+        transition: color 0.3s ease;
+      }
+
+      .gallery-nav a:hover {
+        color: var(--color-text);
+      }
+
+      /* Main Content */
+      .gallery-main {
         max-width: 1200px;
-        margin: 40px auto 80px;
+        margin: 0 auto 80px;
         padding: 0 24px;
       }
 
-      .products-grid {
-        column-count: 1;
-        column-gap: 32px;
+      .section-title {
+        text-align: center;
+        margin: 80px 0 60px;
       }
 
-      @media (min-width: 640px) {
-        .products-grid {
+      .section-title h2 {
+        font-size: 2rem;
+        letter-spacing: 0.4em;
+        color: var(--color-text);
+      }
+
+      /* Masonry Grid */
+      .masonry-grid {
+        column-count: 1;
+        column-gap: 24px;
+      }
+
+      @media (min-width: 768px) {
+        .masonry-grid {
           column-count: 2;
         }
       }
 
       @media (min-width: 1024px) {
-        .products-grid {
+        .masonry-grid {
           column-count: 3;
         }
       }
 
       .masonry-item {
         break-inside: avoid;
-        margin-bottom: 32px;
+        margin-bottom: 24px;
       }
       
       .no-products {
@@ -121,15 +209,13 @@ const storeData = await sanityClient.fetch(query, { slug: STORE_SLUG });
         text-align: center;
         color: var(--color-text-muted);
         padding: 40px;
-        background: var(--color-surface);
-        border-radius: var(--radius);
-        border: 1px dashed var(--color-border);
+        font-family: var(--font-body);
       }
 
       .fade-in-delayed {
         opacity: 0;
-        animation: fadeIn 0.6s ease-out forwards;
-        animation-delay: 0.2s;
+        animation: fadeIn 0.8s ease-out forwards;
+        animation-delay: 0.3s;
       }
 
       @keyframes fadeIn {
@@ -148,3 +234,4 @@ const storeData = await sanityClient.fetch(query, { slug: STORE_SLUG });
     </div>
   </Layout>
 )}
+

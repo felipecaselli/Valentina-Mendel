@@ -18,175 +18,172 @@ const isOut = product.stock <= 0;
 const imageUrl = product.image ? urlForImage(product.image).width(600).height(750).url() : '';
 ---
 
-<div class="product-card" class:list={[{ 'is-out-of-stock': isOut }]}>
-  <div class="product-image-wrapper">
+<div class="artwork-card" class:list={[{ 'is-sold': isOut }]}>
+  <div class="artwork-image-wrapper">
     {imageUrl ? (
-      <img src={imageUrl} alt={product.name} loading="lazy" class="product-image" />
+      <img src={imageUrl} alt={product.name} loading="lazy" class="artwork-image" />
     ) : (
-      <div class="product-image-placeholder">Sin imagen</div>
+      <div class="artwork-image-placeholder">Sin imagen</div>
     )}
-    {isOut && <div class="badge-out">Agotado</div>}
+    {isOut && <div class="badge-sold">Vendido</div>}
 
-    <div class="product-overlay">
+    <div class="artwork-overlay">
       <button 
-        class="add-to-cart-btn" 
+        class="inquiry-btn add-to-cart-btn" 
         disabled={isOut}
         data-id={product._id}
         data-name={product.name}
         data-price={product.price}
       >
-        {isOut ? 'Sin stock' : 'Agregar al carrito'}
+        {isOut ? 'Obra Vendida' : 'Consultar Obra'}
       </button>
     </div>
   </div>
   
-  <div class="product-info">
-    <h3 class="product-name font-serif">{product.name}</h3>
-    <p class="product-price">${product.price.toLocaleString('es-AR')}</p>
-    {product.description && <p class="product-desc">{product.description}</p>}
-    <p class="product-stock">Stock: {product.stock}</p>
+  <div class="artwork-info">
+    <h3 class="artwork-name">{product.name}</h3>
+    {/* Price is hidden to encourage inquiry, typical for art */}
+    {/* <p class="artwork-price">${product.price.toLocaleString('es-AR')}</p> */}
+    {product.description && <p class="artwork-desc">{product.description}</p>}
   </div>
 </div>
 
 <style>
-  .product-card {
+  .artwork-card {
     background: transparent;
     border: none;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     height: 100%;
-    gap: 16px;
+    gap: 20px;
+    margin-bottom: 30px;
   }
   
-  .product-card.is-out-of-stock {
-    opacity: 0.7;
+  .artwork-card.is-sold {
+    opacity: 0.85;
   }
 
-  .product-image-wrapper {
+  .artwork-image-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 5;
-    background: var(--color-border);
-    border-radius: var(--radius);
+    /* Keep a flexible aspect ratio for art, or default to 4/5 if strictly needed. 
+       Removing aspect-ratio allows masonry to work with natural heights if images aren't cropped. */
+    background: var(--color-surface);
     overflow: hidden;
   }
 
-  .product-image {
+  .artwork-image {
     width: 100%;
-    height: 100%;
+    height: auto;
+    display: block;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease;
   }
   
-  .product-card:not(.is-out-of-stock):hover .product-image {
-    transform: scale(1.05);
+  .artwork-card:not(.is-sold):hover .artwork-image {
+    transform: scale(1.03);
+    filter: brightness(0.9);
   }
 
-  .product-image-placeholder {
+  .artwork-image-placeholder {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4/5;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-text-muted);
     font-style: italic;
+    font-family: var(--font-body);
   }
 
-  .badge-out {
+  .badge-sold {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    background: #171717;
+    top: 15px;
+    right: 15px;
+    background: rgba(26, 26, 26, 0.9);
     color: #FFFFFF;
-    font-size: 0.75rem;
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 4px;
+    font-size: 0.7rem;
+    font-family: var(--font-body);
+    font-weight: 400;
+    padding: 8px 16px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     z-index: 2;
   }
 
   /* Overlay that slides up */
-  .product-overlay {
+  .artwork-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    padding: 24px;
+    padding: 30px;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
     z-index: 1;
   }
 
-  .product-card:hover .product-overlay {
+  .artwork-card:hover .artwork-overlay {
     opacity: 1;
   }
 
-  .add-to-cart-btn {
-    width: 100%;
-    background: var(--color-surface);
-    color: var(--color-text);
-    border: none;
-    padding: 14px;
-    border-radius: var(--radius);
-    font-size: 1.0625rem;
+  .inquiry-btn {
+    width: 80%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #1A1A1A;
+    border: 1px solid transparent;
+    padding: 16px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
     cursor: pointer;
     transform: translateY(20px);
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.2s ease, color 0.2s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .product-card:hover .add-to-cart-btn {
+  .artwork-card:hover .inquiry-btn {
     transform: translateY(0);
   }
 
-  .add-to-cart-btn:not(:disabled):hover {
-    background: var(--color-primary);
-    color: white;
+  .inquiry-btn:not(:disabled):hover {
+    background: #1A1A1A;
+    color: #FFFFFF;
+    border-color: #1A1A1A;
   }
 
-  .add-to-cart-btn:disabled {
-    background: var(--color-border);
+  .inquiry-btn:disabled {
+    background: rgba(255, 255, 255, 0.7);
     color: var(--color-text-muted);
     cursor: not-allowed;
   }
 
-  .product-info {
+  .artwork-info {
     display: flex;
     flex-direction: column;
-    padding: 0 4px;
+    padding: 0 10px;
+    text-align: center;
   }
 
-  .product-name {
-    font-size: 1.375rem;
+  .artwork-name {
+    font-size: 1.25rem;
     color: var(--color-text);
-    margin-bottom: 4px;
-    line-height: 1.2;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    letter-spacing: 0.15em;
   }
 
-  .product-price {
-    font-size: 1.0625rem;
-    font-weight: 400;
+  .artwork-desc {
+    font-size: 0.85rem;
     color: var(--color-text-muted);
-    margin-bottom: 8px;
-  }
-
-  .product-desc {
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    margin-bottom: 8px;
-    line-height: 1.5;
+    font-family: var(--font-body);
+    line-height: 1.6;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;  
     overflow: hidden;
-  }
-
-  .product-stock {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
   }
 </style>
