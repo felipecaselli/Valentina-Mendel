@@ -49,6 +49,6 @@ Entras a `https://case-store.sanity.studio/`, creas una nueva tienda dándole un
 
 #### Paso 3: Subirlo a Internet (Despliegue)
 
-- Subes esta carpeta `mosaicosole` a un repositorio (GitHub).
+- Subes esta carpeta `valentina-mendel` a un repositorio (GitHub).
 
 - Lo conectas a un servicio como Netlify o Vercel (gratuitos y geniales para Astro).
